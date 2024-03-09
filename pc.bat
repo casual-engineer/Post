@@ -130,3 +130,17 @@ powershell -Command "Get-AppxPackage *Microsoft.XboxGameSpeechWindow* | Remove-A
 powershell -Command "Get-AppxPackage *Microsoft.XboxIdentityProvider* | Remove-AppxPackage"
 powershell -Command "Get-AppxPackage *Microsoft.XboxLive* | Remove-AppxPackage"
 powershell -Command "Get-AppxPackage *Microsoft.YourPhone* | Remove-AppxPackage"
+
+REM disables unnecessary services
+
+sc stop DiagTrack
+sc config DiagTrack start= disabled
+
+sc stop DusmSvc
+sc config DusmSvc start= disabled
+
+sc stop lfsvc
+sc config lfsvc start= disabled
+
+sc stop themes
+sc config themes start= disabled
