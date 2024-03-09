@@ -14,3 +14,4 @@ Feature:
 10. disables windows 10 telemtry
 11. enables dark mode
 12. removes windows 10 metro apps
+13. disablse unnecessray windows 10 services
