@@ -84,3 +84,49 @@ reg add "HKCU\SOFTWARE\Microsoft\Input\TIPC" /v "LastHRUnsupervisedTraining" /t 
 
 REM disables background apps
 reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\BackgroundAccessApplications" /v "GlobalUserDisabled" /t REG_DWORD /d 1 /f
+
+REM enable dark mode
+
+@echo off
+
+REM Check if dark mode is currently enabled
+reg query HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize /v SystemUsesLightTheme | findstr "0x1"
+if %errorlevel% == 0 (
+    REM Dark mode is enabled, switch to light mode
+    reg add HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize /v SystemUsesLightTheme /t REG_DWORD /d 1 /f
+    echo Dark mode is now disabled.
+) else (
+    REM Dark mode is disabled, switch to dark mode
+    reg add HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize /v SystemUsesLightTheme /t REG_DWORD /d 0 /f
+    echo Dark mode is now enabled.
+)
+
+REM Refresh the explorer to apply changes immediately
+taskkill /f /im explorer.exe
+start explorer.exe
+
+REM remove Windows metro apps
+
+powershell -Command "Get-AppxPackage *3DViewer* | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage *Cortana* | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage *FeedbackHub* | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage *GetHelp* | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage *ZuneMusic* | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage *windowscommunicationsapps* | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage *WindowsMaps* | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage *Microsoft.Payments* | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage *Microsoft.SolitaireCollection* | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage *MixedRealityPortal* | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage *ZuneVideo* | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage *Microsoft.Office.Desktop* | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage *MSPaint* | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage *People* | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage *SkypeApp* | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage *SoundRecorder* | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage *Microsoft.BingWeather* | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage *XboxApp* | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage *Microsoft.XboxGamingOverlay* | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage *Microsoft.XboxGameSpeechWindow* | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage *Microsoft.XboxIdentityProvider* | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage *Microsoft.XboxLive* | Remove-AppxPackage"
+powershell -Command "Get-AppxPackage *Microsoft.YourPhone* | Remove-AppxPackage"
