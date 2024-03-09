@@ -144,3 +144,15 @@ sc config lfsvc start= disabled
 
 sc stop themes
 sc config themes start= disabled
+
+REM disables all start up applications
+
+:: Save current registry settings to a backup file
+reg export "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" "%USERPROFILE%\Desktop\startup_backup.reg" /y >nul 2>&1
+reg export "HKLM\Software\Microsoft\Windows\CurrentVersion\Run" "%USERPROFILE%\Desktop\startup_backup.reg" /y >nul 2>&1
+
+:: Disable startup applications for the current user
+reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /f >nul 2>&1
+
+:: Disable startup applications for all users
+reg delete "HKLM\Software\Microsoft\Windows\CurrentVersion\Run" /f >nul 2>&1
